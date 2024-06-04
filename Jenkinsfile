@@ -95,7 +95,7 @@ pipeline {
                             from:'jenkins@example.com',
                             replyTo:'jenkins@example.com',
                             mimeType:'text/html',
-                            attachmentsPattern: 'trivy-report.txt, trivy-fs.txt'
+                            attachmentsPattern: 'trivy-report.txt'
             )
         }
     }
