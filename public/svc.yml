@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: vite-svc
   namespace: vito
-  app: vite
+ 
 spec:
   type: NodePort
   selector:
