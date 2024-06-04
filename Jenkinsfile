@@ -26,12 +26,13 @@ pipeline {
                 }
             }
         }
-        stage('Trivy file scan') {
+        stage('Trivy File scan') {
             steps {
                 echo 'file scan start'
-                trivy repo --format table -o fs-report.txt https://github.com/shubham9511s/vite_multilanguage_app.git
+                sh'trivy fs --format table -o trivy-fs-report.txt .'
             }
         }
+        
       stage('Build and Push ,Scan Docker Image') {
        environment {
         DOCKER_IMAGE = "shubhamshinde2025/ultimate-cicd:${BUILD_NUMBER}"
@@ -41,8 +42,8 @@ pipeline {
                withDockerRegistry(credentialsId: 'docker-token', toolName: 'docker') {
                    
                      sh 'docker build -t ${DOCKER_IMAGE} .'
+                     sh'trivy image --format table -o trivy-report.html ${DOCKER_IMAGE}'
                       def dockerImage = docker.image("${DOCKER_IMAGE}")
-                       trivy image --format table -o trivy-image-report.txt dockerImage
                        dockerImage.push()
                 
                }
