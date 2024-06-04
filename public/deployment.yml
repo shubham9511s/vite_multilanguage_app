@@ -3,10 +3,8 @@ kind: Deployment
 metadata:
   name: vite-deployment
   namespace: vito
-  labels:
-    app: vite
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: vite
