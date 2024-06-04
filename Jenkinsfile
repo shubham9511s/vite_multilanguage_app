@@ -32,7 +32,7 @@ pipeline {
                 sh'trivy fs --format table -o trivy-fs-report.txt .'
             }
         }
-        
+
       stage('Build and Push ,Scan Docker Image') {
        environment {
         DOCKER_IMAGE = "shubhamshinde2025/ultimate-cicd:${BUILD_NUMBER}"
@@ -42,7 +42,7 @@ pipeline {
                withDockerRegistry(credentialsId: 'docker-token', toolName: 'docker') {
                    
                      sh 'docker build -t ${DOCKER_IMAGE} .'
-                     sh'trivy image --format table -o trivy-report.html ${DOCKER_IMAGE}'
+                     sh'trivy image --format table -o trivy-report.txt ${DOCKER_IMAGE}'
                       def dockerImage = docker.image("${DOCKER_IMAGE}")
                        dockerImage.push()
                 
@@ -77,4 +77,25 @@ pipeline {
         
         
     }
+    post{
+        always {
+            emailext(
+                subject:"pipeline Status: ${BUILD_NUMBER}",
+                body:''' <html>
+                            <body>
+                                  <p>Build Status: ${BUILD_STATUS}</p>
+                                  <p>Build Number: ${BUILD_NUMBER}</p>
+                                  <p>Check the <a href="${BUILD_URL}">Console output</a>.</p>
+                            </body>
+                            </html>''' ,
+                            to: 'shubham.ssc100@gmail.com',
+                            from:'jenkins@example.com',
+                            replyTo:'jenkins@example.com',
+                            mimeType:'text/html'
+                            attachmentsPattern: 'trivy-report.txt, trivy-fs-report.txt'
+            )
+        }
+    }
+
+
 }
