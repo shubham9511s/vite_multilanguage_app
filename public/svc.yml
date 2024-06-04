@@ -1,14 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: vite-svc
-  namespace: vito
+  labels:
+    app: vite
+  name: vite
+  namespace: vito-app
 spec:
-  type: NodePort
-  selector:
-    app.kubernetes.io/name: vite
   ports:
-    - port: 80
-      targetPort: 5173
-      protocol: TCP
-     
+  - port: 5173
+    protocol: TCP
+    targetPort: 5173
+  selector:
+    app: vite 
+  type: NodePort
