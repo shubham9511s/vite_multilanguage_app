@@ -17,7 +17,7 @@ pipeline {
         stage('Git-checkout') {
             steps {
                 echo 'Clone code from git'
-                git changelog: false, poll: false, url: 'https://github.com/shubham9511s/vite_multilanguage_app.git'
+                git url: 'https://github.com/shubham9511s/vite_multilanguage_app.git'
             }
         }
         stage('static code quality check') {
