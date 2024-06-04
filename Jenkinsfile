@@ -5,6 +5,12 @@ pipeline {
         SONAR_HOME= tool 'sonar'
     }
     stages {
+        stage('clean-ws') {
+            steps {
+                echo 'Clean workspace'
+                cleanWs()
+            }
+        }
         stage('Git-checkout') {
             steps {
                 echo 'Clone code from git'
@@ -20,7 +26,13 @@ pipeline {
                 }
             }
         }
-      stage('Build and Push Docker Image') {
+        stage('Trivy file scan') {
+            steps {
+                echo 'file scan start'
+                trivy repo --format table -o fs-report.txt https://github.com/shubham9511s/vite_multilanguage_app.git
+            }
+        }
+      stage('Build and Push ,Scan Docker Image') {
        environment {
         DOCKER_IMAGE = "shubhamshinde2025/ultimate-cicd:${BUILD_NUMBER}"
       }
@@ -30,6 +42,7 @@ pipeline {
                    
                      sh 'docker build -t ${DOCKER_IMAGE} .'
                       def dockerImage = docker.image("${DOCKER_IMAGE}")
+                       trivy image --format table -o trivy-image-report.txt dockerImage
                        dockerImage.push()
                 
                }
