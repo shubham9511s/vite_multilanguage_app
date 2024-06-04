@@ -38,7 +38,7 @@ pipeline {
 
       stage('Build and Push ,Scan Docker Image') {
        environment {
-        DOCKER_IMAGE = "shubhamshinde2025/ultimate-cicd:v${BUILD_NUMBER}"
+        DOCKER_IMAGE = "shubhamshinde2025/ultimate-cicd:${BUILD_NUMBER}"
       }
       steps {
         script {
@@ -65,9 +65,9 @@ pipeline {
                     git config user.email "shubham.xyz@gmail.com"
                     git config user.name "Shubham Shinde"
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/v${BUILD_NUMBER}/g" public/deployment.yml
-                    git add public/deployment.yml
-                    git commit -m "Update deployment image to version v${BUILD_NUMBER}"
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" public/deployment.yml
+                    git add .
+                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master
                 '''
            }
