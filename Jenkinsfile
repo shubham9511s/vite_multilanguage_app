@@ -4,6 +4,9 @@ pipeline {
     environment{
         SONAR_HOME= tool 'sonar'
     }
+       tools {
+        nodejs 'node20' 
+    }
     stages {
         stage('clean-ws') {
             steps {
@@ -29,7 +32,7 @@ pipeline {
         stage('Trivy File scan') {
             steps {
                 echo 'file scan start'
-                sh'trivy fs --format table -o trivy-fs-report.txt .'
+                 sh 'trivy fs . > trivy-fs.txt'
             }
         }
 
@@ -92,7 +95,7 @@ pipeline {
                             from:'jenkins@example.com',
                             replyTo:'jenkins@example.com',
                             mimeType:'text/html',
-                            attachmentsPattern: 'trivy-report.txt, trivy-fs-report.txt'
+                            attachmentsPattern: 'trivy-report.txt, trivy-fs.txt'
             )
         }
     }
