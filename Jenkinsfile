@@ -22,7 +22,7 @@ pipeline {
         }
         stage('static code quality check') {
             steps {
-                echo 'Sonar scan start'
+                echo 'Sonar scan start static code quality test'
                 withSonarQubeEnv('sonar-server') {
                     sh"$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=multivite-app -Dsonar.projectKey=multivite-app"
                     
