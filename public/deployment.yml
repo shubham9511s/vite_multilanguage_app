@@ -6,7 +6,7 @@ metadata:
   labels:
     app: vite
 spec:
-  replicas: 4
+  replicas: 2
   selector:
     matchLabels:
       app: vite
@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: vite
-        image: shubhamshinde2025/ultimate-cicd:12
+        image: shubhamshinde2025/ultimate-cicd:14
         ports:
         - containerPort: 5173
