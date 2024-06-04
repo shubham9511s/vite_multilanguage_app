@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: vite
-        image: shubhamshinde2025/ultimate-cicd:14
+        image: shubhamshinde2025/ultimate-cicd:12
         ports:
         - containerPort: 5173
