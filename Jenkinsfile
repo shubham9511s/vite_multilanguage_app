@@ -91,7 +91,7 @@ pipeline {
                             to: 'shubham.ssc100@gmail.com',
                             from:'jenkins@example.com',
                             replyTo:'jenkins@example.com',
-                            mimeType:'text/html'
+                            mimeType:'text/html',
                             attachmentsPattern: 'trivy-report.txt, trivy-fs-report.txt'
             )
         }
