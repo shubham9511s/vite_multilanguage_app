@@ -61,7 +61,7 @@ pipeline {
     }
        stage('Update Deployment File') {
         environment {
-            GIT_REPO_NAME = "vite_multilanguage_app"
+            GIT_REPO_NAME = "manifest-file"
             GIT_USER_NAME = "shubham9511s"
         }
         steps {
@@ -71,10 +71,10 @@ pipeline {
                     git config user.email "shubham.xyz@gmail.com"
                     git config user.name "Shubham Shinde"
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" public/deployment.yml
-                    git add public/deployment.yml
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" manifest/main.yml
+                    git add manifest/main.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master
+                    git push https://${TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                 '''
            }
            
