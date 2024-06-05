@@ -7,13 +7,13 @@ pipeline {
        tools {
         nodejs 'node20' 
     }
-    stages {
+   /* stages {
         stage('clean-ws') {
             steps {
                 echo 'Clean workspace'
                 cleanWs()
             }
-        }
+        }*/
         stage('Git-checkout') {
             steps {
                 echo 'Clone code from git'
@@ -32,7 +32,7 @@ pipeline {
         stage('Trivy File scan') {
             steps {
                 echo 'file scan start'
-                 sh 'trivy fs . > trivy-fs.txt'
+                 sh 'trivy fs . '
             }
         }
 
@@ -45,7 +45,7 @@ pipeline {
                withDockerRegistry(credentialsId: 'docker-token', toolName: 'docker') {
                    
                      sh 'docker build -t ${DOCKER_IMAGE} .'
-                     sh'trivy image --format table -o trivy-report.txt ${DOCKER_IMAGE}'
+                     sh'trivy image --format table ${DOCKER_IMAGE}'
                       def dockerImage = docker.image("${DOCKER_IMAGE}")
                        dockerImage.push()
                 
@@ -95,7 +95,7 @@ pipeline {
                             from:'jenkins@example.com',
                             replyTo:'jenkins@example.com',
                             mimeType:'text/html',
-                            attachmentsPattern: 'trivy-report.txt'
+                          
             )
         }
     }
