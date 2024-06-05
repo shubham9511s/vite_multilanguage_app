@@ -39,7 +39,7 @@ pipeline {
         stage('Trivy File scan') {
             steps {
                 echo 'file scan start'
-                 sh 'trivy fs . '
+                 sh "trivy fs . "
             }
         }
 
@@ -50,9 +50,8 @@ pipeline {
       steps {
         script {
                withDockerRegistry(credentialsId: 'docker-token', toolName: 'docker') {
-                   
-                     sh 'docker build -t ${DOCKER_IMAGE} .'
-                     sh'trivy image --format table ${DOCKER_IMAGE}'
+                     sh "docker build -t ${DOCKER_IMAGE} ."
+                     sh"trivy image --format table ${DOCKER_IMAGE}"
                       def dockerImage = docker.image("${DOCKER_IMAGE}")
                        dockerImage.push()
                 
