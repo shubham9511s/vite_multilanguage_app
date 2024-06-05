@@ -14,12 +14,12 @@ pipeline {
                 cleanWs()
             }
         }
-        /*stage('Git-checkout') {
+        stage('Git-checkout') {
             steps {
                 echo 'Clone code from git'
                 git url: 'https://github.com/shubham9511s/vite_multilanguage_app.git'
             }
-        }*/
+        }
         stage('static code quality check') {
             steps {
                 echo 'Sonar scan start static code quality test'
