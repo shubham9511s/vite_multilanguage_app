@@ -17,7 +17,7 @@ spec:
         app: vite
     spec:
       containers:
-      - image:  shubhamshinde2025/ultimate-cicd:replaceImageTag
+      - image:  shubhamshinde2025/ultimate-cicd:3
         imagePullPolicy: Always
         name: vite
         ports:
